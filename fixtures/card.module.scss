@@ -1,0 +1,32 @@
+@use "sass:math";
+
+$space: 4px;
+$radius: 12px;
+$tones: (
+  "paper": #fff9f5,
+  "ink": #342c31,
+);
+
+@mixin elevated($depth: 1) {
+  box-shadow: 0 #{$depth * 2}px #{$depth * 8}px rgba(52, 44, 49, 0.08 * $depth);
+}
+
+.card {
+  padding: math.div($space * 6, 2);
+  border-radius: $radius;
+  @include elevated(2);
+
+  &__title {
+    font-weight: 600;
+  }
+
+  @each $name, $tone in $tones {
+    &--#{$name} {
+      background: $tone;
+    }
+  }
+
+  &:not(.is-muted):hover {
+    @include elevated(3);
+  }
+}

@@ -1,0 +1,17 @@
+# Only the manifest, docs, icon and generated themes ship in the VSIX.
+.vscode/**
+.vscode-test/**
+.github/**
+node_modules/**
+src/**
+scripts/**
+test/**
+fixtures/**
+screenshots/**
+images/*.svg
+*.vsix
+.gitignore
+.gitattributes
+.editorconfig
+package-lock.json
+CONTRIBUTING.md

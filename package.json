@@ -1,0 +1,76 @@
+{
+  "name": "cindervale-theme",
+  "displayName": "Cindervale — Warm VS Code Theme",
+  "description": "A warm, premium VS Code theme with refined light and dark modes, colorful syntax highlighting, and low-fatigue contrast.",
+  "version": "1.0.0",
+  "publisher": "erenthedeveloper0",
+  "author": "Eren SÜMER",
+  "license": "MIT",
+  "icon": "images/icon.png",
+  "galleryBanner": {
+    "color": "#191517",
+    "theme": "dark"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/erenthedeveloper0/cindervale.git"
+  },
+  "bugs": {
+    "url": "https://github.com/erenthedeveloper0/cindervale/issues"
+  },
+  "homepage": "https://github.com/erenthedeveloper0/cindervale#readme",
+  "pricing": "Free",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "keywords": [
+    "vscode",
+    "theme",
+    "color-theme",
+    "dark-theme",
+    "light-theme",
+    "warm-theme",
+    "syntax-highlighting",
+    "typescript",
+    "javascript",
+    "react",
+    "nextjs",
+    "css",
+    "markdown",
+    "python",
+    "json",
+    "yaml"
+  ],
+  "contributes": {
+    "themes": [
+      {
+        "label": "Cindervale Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/cindervale-dark-color-theme.json"
+      },
+      {
+        "label": "Cindervale Light",
+        "uiTheme": "vs",
+        "path": "./themes/cindervale-light-color-theme.json"
+      }
+    ]
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "check": "node scripts/build.mjs --check",
+    "contrast": "node scripts/contrast.mjs",
+    "test": "node --test \"test/**/*.test.mjs\"",
+    "package": "vsce package",
+    "publish": "vsce publish",
+    "vscode:prepublish": "npm run check && npm test"
+  },
+  "devDependencies": {
+    "@vscode/vsce": "^4.0.0"
+  },
+  "allowScripts": {
+    "@vscode/vsce-sign@2.1.0": true
+  }
+}

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <title>Cindervale</title>
+  <defs>
+    <clipPath id="tile"><rect width="512" height="512" rx="116"/></clipPath>
+  </defs>
+  <rect width="512" height="512" rx="116" fill="#211B1E"/>
+  <g clip-path="url(#tile)">
+    <!-- The ember: a rounded lozenge in coral -->
+    <rect x="204" y="246" width="104" height="104" rx="28" transform="rotate(45 256 298)" fill="#F08A76"/>
+    <!-- The valley: one soft plum silhouette cradling it -->
+    <path d="M-10 276 C 104 276 178 390 256 390 C 334 390 408 276 522 276 V522 H-10 Z" fill="#87506D"/>
+  </g>
+</svg>

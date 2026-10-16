@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Atelier Studio &mdash; Projects</title>
+    <link rel="stylesheet" href="/styles/globals.css" />
+    <style>
+      .hero { padding: 4rem 2rem; color: #342c31; }
+    </style>
+  </head>
+  <body class="hero" data-theme="paper">
+    <!-- Primary navigation -->
+    <nav aria-label="Main">
+      <a href="/" class="brand">Atelier</a>
+      <a href="/projects" aria-current="page">Projects</a>
+    </nav>
+
+    <main id="content">
+      <h1>Selected work, 2024&ndash;2026</h1>
+      <img src="/images/cover.webp" alt="Studio desk in morning light" width="1200" height="800" loading="lazy" />
+      <button type="button" disabled>Load more</button>
+    </main>
+
+    <script type="module">
+      const nav = document.querySelector("nav");
+      nav?.addEventListener("click", (event) => console.log(event.target));
+    </script>
+  </body>
+</html>

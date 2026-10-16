@@ -1,0 +1,39 @@
+# Deploy the studio site on every tagged release.
+name: Deploy
+
+on:
+  push:
+    tags: ["v*.*.*"]
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: 22
+  NEXT_TELEMETRY_DISABLED: true
+
+defaults: &defaults
+  runs-on: ubuntu-latest
+  timeout-minutes: 15
+
+jobs:
+  build:
+    <<: *defaults
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+      - name: Build
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm build
+      - name: Smoke test
+        run: pnpm test -- --reporter=dot
+        continue-on-error: false
+
+  release:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/')
+    environment: production
+    retries: 2
+    notify: null

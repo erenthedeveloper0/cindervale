@@ -1,0 +1,31 @@
+{
+  "name": "atelier-studio",
+  "version": "2.4.0",
+  "private": true,
+  "description": "Portfolio and project board for a small design studio.",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint . --max-warnings 0",
+    "test": "vitest run --coverage"
+  },
+  "dependencies": {
+    "next": "^16.0.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "zod": "^4.1.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.0",
+    "tailwindcss": "^4.1.0",
+    "typescript": "^5.9.0",
+    "vitest": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "sideEffects": false,
+  "browserslist": null
+}
