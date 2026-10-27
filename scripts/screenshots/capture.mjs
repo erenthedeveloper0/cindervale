@@ -19,6 +19,8 @@ import { cleanEnv, connect, launch } from './cdp.mjs';
 import { createWorkspace } from './workspace.mjs';
 
 const repo = fileURLToPath(new URL('../../', import.meta.url));
+// Kept short on purpose: VS Code puts its IPC socket in the profile folder,
+// and macOS rejects socket paths longer than 103 characters.
 const work = path.join(repo, '.vscode-test', 'screenshots');
 const qa = process.argv.includes('--qa');
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
