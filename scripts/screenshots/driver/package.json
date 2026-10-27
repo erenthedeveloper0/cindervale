@@ -1,0 +1,11 @@
+{
+  "name": "cindervale-screenshot-driver",
+  "displayName": "Cindervale screenshot driver",
+  "description": "Development-only helper that arranges VS Code scenes for screenshots. Never published.",
+  "version": "0.0.0",
+  "publisher": "cindervale-dev",
+  "private": true,
+  "engines": { "vscode": "^1.75.0" },
+  "activationEvents": ["onStartupFinished"],
+  "main": "./extension.js"
+}

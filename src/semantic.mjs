@@ -7,6 +7,8 @@
 
 export function semanticTokenColors(p) {
   const c = p.syntax;
+  // Constants may be told apart by weight as well as color.
+  const constant = c.constantStyle ? { foreground: c.constant, bold: true } : c.constant;
   return {
     namespace: c.namespace,
 
@@ -19,9 +21,9 @@ export function semanticTokenColors(p) {
     'class.defaultLibrary': c.typeSoft,
     'interface.defaultLibrary': c.typeSoft,
 
-    enum: c.constant,
-    enumMember: c.constant,
-    'variable.constant': c.constant,
+    enum: c.enum,
+    enumMember: constant,
+    'variable.constant': constant,
 
     function: c.function,
     method: c.method,

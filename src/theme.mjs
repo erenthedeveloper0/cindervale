@@ -7,14 +7,16 @@ import { workbench } from './workbench.mjs';
 export const variants = [
   { type: 'dark', name: 'Cindervale Dark', file: 'cindervale-dark-color-theme.json' },
   { type: 'light', name: 'Cindervale Light', file: 'cindervale-light-color-theme.json' },
+  { type: 'dark', accessible: true, name: 'Cindervale Accessible Dark', file: 'cindervale-accessible-dark-color-theme.json' },
+  { type: 'light', accessible: true, name: 'Cindervale Accessible Light', file: 'cindervale-accessible-light-color-theme.json' },
 ];
 
-export function createTheme({ type, name }) {
-  const palette = createPalette(type);
+export function createTheme(variant) {
+  const palette = createPalette(variant);
   return {
     $schema: 'vscode://schemas/color-theme',
-    name,
-    type,
+    name: variant.name,
+    type: variant.type,
     semanticHighlighting: true,
     colors: workbench(palette),
     tokenColors: tokenColors(palette),

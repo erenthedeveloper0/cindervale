@@ -8,6 +8,8 @@ scripts/**
 test/**
 fixtures/**
 screenshots/**
+docs/**
+reports/**
 images/*.svg
 *.vsix
 .gitignore
