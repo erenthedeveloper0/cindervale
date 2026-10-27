@@ -20,6 +20,18 @@ const STYLESHEETS = ['source.css', 'source.scss', 'source.less', 'source.postcss
 const SCRIPT_SUFFIXES = ['ts', 'tsx', 'js', 'jsx'];
 const scriptScopes = (names) => names.flatMap((n) => SCRIPT_SUFFIXES.map((x) => `${n}.${x}`));
 
+// True constants: ALL_CAPS names, `const` items, enum members, and Rust's
+// Option/Result variants (plus JS/TS ALL_CAPS references, see below).
+const TRUE_CONSTANTS = [
+  'constant.other.caps',
+  'entity.name.constant',
+  'variable.other.enummember',
+  'constant.other.enum',
+  'entity.name.type.option.rust',
+  'entity.name.type.result.rust',
+  'variable.other.constant',
+];
+
 export function tokenColors(p) {
   const c = p.syntax;
   const t = p.text;
@@ -119,7 +131,7 @@ export function tokenColors(p) {
         'keyword.control.at-rule.use punctuation.definition.keyword',
         'keyword.control.at-rule.forward punctuation.definition.keyword',
       ],
-      c.namespace,
+      c.module,
     ),
 
     // ── Operators ───────────────────────────────────────────────────────
@@ -215,7 +227,7 @@ export function tokenColors(p) {
       ],
       c.typeSoft,
     ),
-    rule('Enums', ['entity.name.type.enum', 'entity.name.enum'], c.constant),
+    rule('Enums', ['entity.name.type.enum', 'entity.name.enum'], c.enum),
     rule(
       'Namespaces and modules',
       [
@@ -265,6 +277,21 @@ export function tokenColors(p) {
       ['constant.other', 'constant.other.caps', 'entity.name.constant', 'support.constant', 'variable.other.enummember', 'constant.other.enum', 'variable.other.constant.ruby'],
       c.constant,
     ),
+    // Where constants are told apart by weight, only true constants get it.
+    // The broad `constant.other` and `support.constant` scopes also cover CSS
+    // colors, shell flags and SQL tables, so they stay regular. JS/TS give
+    // every `const` declaration the ALL_CAPS scope; declarations go back to
+    // regular weight. Every selector is anchored under `source`: when a
+    // semantic token leaves weight unset, VS Code probes TextMate rules with
+    // a bare scope (`variable.readonly` probes `variable.other.constant`),
+    // and TypeScript marks every const binding readonly. Anchored selectors
+    // apply to real tokens only, so no binding turns bold through a probe.
+    ...(c.constantStyle
+      ? [
+          rule('Constants by weight', TRUE_CONSTANTS.map((scope) => `source ${scope}`), c.constant, c.constantStyle),
+          rule('Constant declarations', ['source meta.definition.variable variable.other.constant'], c.text, ''),
+        ]
+      : []),
     rule('Strings', ['string', 'punctuation.definition.string', 'string.template', 'string.quoted', 'constant.character', 'string.unquoted.plain.out.yaml', 'string.unquoted.plain.in.yaml', 'property.value.dotenv'], c.string),
     rule(
       'Escapes, placeholders and entities',

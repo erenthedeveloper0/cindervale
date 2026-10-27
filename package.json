@@ -1,8 +1,8 @@
 {
   "name": "cindervale-theme",
   "displayName": "Cindervale — Warm VS Code Theme",
-  "description": "A warm, premium VS Code theme with refined light and dark modes, colorful syntax highlighting, and low-fatigue contrast.",
-  "version": "1.0.0",
+  "description": "A warm, carefully crafted VS Code theme with expressive syntax highlighting, refined light and dark modes, and dedicated color-vision-aware palettes.",
+  "version": "1.1.0",
   "publisher": "erenthedeveloper0",
   "author": "Eren SÜMER",
   "license": "MIT",
@@ -28,11 +28,16 @@
   ],
   "keywords": [
     "vscode",
+    "visual-studio-code",
     "theme",
     "color-theme",
     "dark-theme",
     "light-theme",
     "warm-theme",
+    "accessible-theme",
+    "colorblind",
+    "color-blind",
+    "color-vision-deficiency",
     "syntax-highlighting",
     "typescript",
     "javascript",
@@ -55,6 +60,16 @@
         "label": "Cindervale Light",
         "uiTheme": "vs",
         "path": "./themes/cindervale-light-color-theme.json"
+      },
+      {
+        "label": "Cindervale Accessible Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/cindervale-accessible-dark-color-theme.json"
+      },
+      {
+        "label": "Cindervale Accessible Light",
+        "uiTheme": "vs",
+        "path": "./themes/cindervale-accessible-light-color-theme.json"
       }
     ]
   },
@@ -62,7 +77,13 @@
     "build": "node scripts/build.mjs",
     "check": "node scripts/build.mjs --check",
     "contrast": "node scripts/contrast.mjs",
+    "vision": "node scripts/vision.mjs",
+    "tokens": "node scripts/inspect-tokens.mjs",
+    "colors:sync": "node scripts/sync-color-ids.mjs",
     "test": "node --test \"test/**/*.test.mjs\"",
+    "test:themes": "node --test test/themes.test.mjs",
+    "package:check": "node scripts/package-check.mjs",
+    "screenshots": "node scripts/screenshots/capture.mjs",
     "package": "vsce package",
     "publish": "vsce publish",
     "vscode:prepublish": "npm run check && npm test"

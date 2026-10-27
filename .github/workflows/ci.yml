@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    name: Themes, accessibility audits and package
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      - name: Generated themes match src/
+        run: npm run check
+      - name: Tests (schema, manifest, color IDs, contrast, color vision)
+        run: npm test
+      - name: Contrast audit
+        run: npm run contrast -- --failures --json reports/contrast.json
+      - name: Color-vision audit
+        run: npm run vision -- --failures --json reports/vision.json
+      - name: Package contents
+        run: npm run package:check
+      - name: Build the VSIX
+        run: npx vsce package --out cindervale-theme.vsix
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: audit-reports
+          path: reports/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vsix
+          path: cindervale-theme.vsix
+
+  vscode-grammars:
+    name: Tokens and color IDs against the latest VS Code
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - name: Download VS Code (stable)
+        run: |
+          mkdir -p "$RUNNER_TEMP/vscode"
+          curl -fsSL https://update.code.visualstudio.com/latest/linux-x64/stable | tar -xz -C "$RUNNER_TEMP/vscode"
+          echo "VSCODE_APP=$RUNNER_TEMP/vscode/VSCode-linux-x64/resources/app" >> "$GITHUB_ENV"
+      - name: Fixture tokens resolve to their intended roles
+        run: npm run tokens
+      - name: Every theme color is registered by this VS Code
+        run: node scripts/sync-color-ids.mjs --check
