@@ -105,8 +105,14 @@ export function findChromium() {
   return candidates.find(existsSync);
 }
 
-/** Render a local HTML file to PNG with a headless Chromium. */
-export async function renderHtml(file, { width, height, scale = 2, profile }) {
+/**
+ * Render a local HTML file with a headless Chromium. PNG by default;
+ * `transparent` keeps the page background clear (PNG only), and
+ * `format: 'jpeg'` with `quality` suits opaque, textured artwork. The whole
+ * page is captured unless `clip` gives a size: headless windows are at least
+ * 500 px wide, so smaller images need one.
+ */
+export async function renderHtml(file, { width, height, scale = 2, profile, transparent = false, format = 'png', quality = 90, clip }) {
   const binary = findChromium();
   if (!binary) throw new Error('No Chromium-based browser found; set CHROME to one.');
   // Size and scale are fixed at launch: changing the device scale after the
@@ -126,6 +132,7 @@ export async function renderHtml(file, { width, height, scale = 2, profile }) {
     // Navigate only once connected, so nothing is evaluated mid-navigation.
     const page = await connect(await child.port, /^about:blank/);
     await page.send('Page.enable');
+    if (transparent) await page.send('Emulation.setDefaultBackgroundColorOverride', { color: { r: 0, g: 0, b: 0, a: 0 } });
     const loaded = page.once('Page.loadEventFired');
     await page.send('Page.navigate', { url: `file://${file}` });
     await loaded;
@@ -134,10 +141,12 @@ export async function renderHtml(file, { width, height, scale = 2, profile }) {
     // Capture the laid-out page, not the window: headless window sizes
     // include browser chrome that is never drawn.
     const { cssContentSize } = await page.send('Page.getLayoutMetrics');
+    const size = clip ?? { width: Math.ceil(cssContentSize.width), height: Math.ceil(cssContentSize.height) };
     const { data } = await page.send('Page.captureScreenshot', {
-      format: 'png',
+      format,
+      ...(format === 'jpeg' ? { quality } : {}),
       captureBeyondViewport: true,
-      clip: { x: 0, y: 0, width: Math.ceil(cssContentSize.width), height: Math.ceil(cssContentSize.height), scale: 1 },
+      clip: { x: 0, y: 0, ...size, scale: 1 },
     });
     const png = Buffer.from(data, 'base64');
     page.close();

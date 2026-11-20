@@ -84,6 +84,7 @@
     "test:themes": "node --test test/themes.test.mjs",
     "package:check": "node scripts/package-check.mjs",
     "screenshots": "node scripts/screenshots/capture.mjs",
+    "brand": "node scripts/brand/build.mjs",
     "package": "vsce package",
     "publish": "vsce publish",
     "vscode:prepublish": "npm run check && npm test"

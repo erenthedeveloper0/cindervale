@@ -9,13 +9,18 @@ repository publishes automatically.
 - [ ] `version` in `package.json` follows [Semantic Versioning](https://semver.org): new themes or
       colors are a minor release, corrections a patch. The extension ID and publisher stay the same.
 - [ ] `npm run build`, then `git status` shows no unexpected changes in `themes/`.
-- [ ] `npm test` passes (schema, manifest, color IDs, contrast and color-vision checks).
+- [ ] `npm test` passes (schema, manifest, color IDs, contrast, color-vision and documentation checks).
 - [ ] `npm run contrast` and `npm run vision` report no failures.
 - [ ] `npm run tokens` passes against the current VS Code (also run by CI).
 - [ ] If VS Code was updated: `npm run colors:sync -- --check` passes, then `npm run colors:sync`.
 - [ ] Screenshots are current: `npm run screenshots` after any visible change, and the images were
       looked at, not just generated.
-- [ ] `docs/accessibility.md` and the README palette tables match `src/palette.mjs`.
+- [ ] `docs/accessibility.md` and the README palette tables match `src/palette.mjs` (`npm test`
+      checks the README's accessible table).
+- [ ] If the mark or the main screenshots changed: `npm run brand`, then upload
+      `brand/social/cindervale-social-preview.jpg` under Settings → General → Social preview.
+- [ ] If what Cindervale offers changed: the repository's About section matches
+      [brand/README.md](../brand/README.md#on-github).
 - [ ] `npm run package:check` lists the four themes, `README.md`, `CHANGELOG.md`, `LICENSE`,
       `package.json` and the icon, and nothing else.
 - [ ] CI is green on the release commit.

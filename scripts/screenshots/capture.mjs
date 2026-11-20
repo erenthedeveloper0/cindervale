@@ -51,7 +51,6 @@ function scenes(root) {
     });
   };
   const out = (file) => path.join(repo, 'screenshots', file);
-  const scratch = (file) => path.join(work, 'captures', file);
 
   scene(
     'React component, Explorer and terminal',
@@ -71,8 +70,8 @@ function scenes(root) {
     [
       [DARK, out('cindervale-accessible-dark.png')],
       [LIGHT, out('cindervale-accessible-light.png')],
-      ['Cindervale Dark', scratch('cindervale-dark.png')],
-      ['Cindervale Light', scratch('cindervale-light.png')],
+      ['Cindervale Dark', out('cindervale-dark.png')],
+      ['Cindervale Light', out('cindervale-light.png')],
     ],
     7000,
   );
@@ -177,7 +176,6 @@ await rm(profile, { recursive: true, force: true });
 await rm(control, { recursive: true, force: true });
 await mkdir(path.join(profile, 'User'), { recursive: true });
 await mkdir(control, { recursive: true });
-await mkdir(path.join(work, 'captures'), { recursive: true });
 if (qa) await mkdir(path.join(work, 'qa'), { recursive: true });
 
 await writeFile(

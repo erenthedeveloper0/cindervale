@@ -1,12 +1,21 @@
 # Contributing to Cindervale
 
-Thanks for helping improve Cindervale. Issues with a short code sample and a screenshot are the
-fastest way to report a color that looks wrong. If two colors are hard for you to tell apart, say
-which theme you use and, if you are comfortable sharing it, how you see color.
+Thanks for helping improve Cindervale. A [color report](https://github.com/erenthedeveloper0/cindervale/issues/new/choose)
+with a short code sample and a screenshot is the fastest way to flag a color that looks wrong. If
+two colors are hard for you to tell apart, say which variant you use and, if you are comfortable
+sharing it, how you see color.
 
 ## How the themes are built
 
 The files in `themes/` are generated. Edit the source in `src/`, never the JSON directly.
+
+```text
+                   ┌─► src/workbench.mjs ─┐
+src/palette.mjs ───┼─► src/syntax.mjs ────┼─► src/theme.mjs ─► npm run build ─► themes/*.json ─► VSIX
+                   └─► src/semantic.mjs ──┘
+
+npm test, npm run contrast, npm run vision and npm run tokens check the generated themes.
+```
 
 | Path | Contents |
 | --- | --- |
@@ -17,10 +26,11 @@ The files in `themes/` are generated. Edit the source in `src/`, never the JSON 
 | `src/theme.mjs` | The list of variants |
 | `src/color.mjs` | Color math: mixing, OKLCH adjustments, WCAG contrast |
 | `src/vision.mjs` | Color-vision simulation (Brettel 1997) and CIEDE2000 |
-| `test/` | Freshness, schema, manifest, color-ID, contrast and color-vision tests; token expectations |
-| `scripts/` | Build, audits, token inspector, package check, screenshot tooling |
+| `test/` | Freshness, schema, manifest, color-ID, contrast, color-vision and documentation tests; token expectations |
+| `scripts/` | Build, audits, token inspector, package check, screenshot tooling, brand assets |
 | `fixtures/` | Sample files for visual testing in every supported language |
-| `docs/` | Accessibility notes and the release checklist |
+| `docs/` | Accessibility notes, customization recipes and the release checklist |
+| `brand/` | The identity: logo, banners, social preview and [its guidelines](brand/README.md) |
 
 In the standard light theme, accents used as text are darkened in OKLCH ("ink" tones) until they
 reach a readable contrast on the ivory background; hue and chroma stay the same. The accessible
@@ -32,7 +42,7 @@ each one.
 ```sh
 npm install
 npm run build          # regenerate themes/*.json from src/
-npm test               # freshness, schema, color IDs, contrast and color-vision checks
+npm test               # freshness, schema, color IDs, contrast, color vision, documentation
 npm run contrast       # full contrast report for all four themes
 npm run vision         # full color-vision report
 npm run tokens         # fixture tokens vs. VS Code's own grammars (needs a local VS Code)
@@ -56,14 +66,42 @@ machine. Set `VSCODE_APP` to its `resources/app` folder if it is not found.
   [rules for future color changes](docs/accessibility.md#rules-for-future-color-changes) and include
   the "closest syntax pair" lines from `npm run vision` in the pull request.
 - Add a token expectation in `test/token-expectations.mjs` for any new TextMate rule.
+- If you add or remove an italic or bold rule, update the recipes in
+  [docs/customization.md](docs/customization.md); `npm test` fails until they match the themes.
 
 ## Screenshots
 
 `npm run screenshots` rebuilds the demo project, installs the packaged extension into a throwaway
 VS Code profile under `.vscode-test/`, and captures every scene at 2×, followed by the palette
-sheet and the color-vision boards. A VS Code window opens while it runs. Add `--qa` to also capture
+sheets and the color-vision boards. A VS Code window opens while it runs. Add `--qa` to also capture
 interaction states (Command Palette, selection, find, suggestions, hover, settings, search) into
 `.vscode-test/screenshots/qa/` for review. Look at the images before committing them.
+
+`node scripts/screenshots/boards.mjs` rebuilds only the palette sheets and the color-vision boards,
+from `src/palette.mjs` and the captures already in `screenshots/`, without opening VS Code. The two
+standard-theme split views (`cindervale-dark-split.png` and `cindervale-light-split.png`) were
+captured for 1.0.0 and are not produced by the script; the standard themes have not changed since.
+
+## Brand assets
+
+The logo, the Marketplace icon, the README banners and divider, and the social preview are generated
+from [`scripts/brand/identity.mjs`](scripts/brand/identity.mjs). [brand/README.md](brand/README.md)
+explains the identity and lists every file.
+
+```sh
+npm run brand            # everything (headless Chromium, network for the typefaces)
+npm run brand -- --svg   # the SVG logos and icon only
+```
+
+`images/icon.png` ships in the VSIX, so a change to the mark changes the Marketplace listing at the
+next release. GitHub does not read the social preview from the repository: upload
+`brand/social/cindervale-social-preview.jpg` in the repository settings after rebuilding it.
+
+## Pull requests
+
+The pull request template lists the checks for a color change. Include before-and-after screenshots
+for anything visible, and the "closest syntax pair" lines from `npm run vision` for changes to the
+accessible variants.
 
 ## Releasing
 

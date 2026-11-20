@@ -26,7 +26,7 @@ const required = [
   ...manifest.contributes.themes.map((theme) => path.posix.normalize(theme.path)),
 ];
 const forbidden = [
-  /^src\//, /^scripts\//, /^test\//, /^fixtures\//, /^screenshots\//, /^docs\//, /^reports\//,
+  /^src\//, /^scripts\//, /^test\//, /^fixtures\//, /^screenshots\//, /^docs\//, /^reports\//, /^brand\//,
   /^node_modules\//, /^\.github\//, /^\.vscode\//, /\.vsix$/, /(^|\/)\.env/, /\.DS_Store$/, /package-lock\.json$/,
 ];
 

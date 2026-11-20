@@ -1,50 +1,75 @@
-// The palette sheet and the color-vision boards that accompany the
-// screenshots. Both are plain HTML rendered by a headless Chromium.
+// The palette sheets and the color-vision boards that accompany the
+// screenshots. Both are plain HTML rendered by a headless Chromium, set in the
+// brand typefaces (scripts/brand/identity.mjs).
+//
+//   node scripts/screenshots/boards.mjs   rebuild them from src/palette.mjs and
+//                                         the captures in screenshots/, without VS Code
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import { accessibleSource } from '../../src/palette.mjs';
+import { fileURLToPath } from 'node:url';
+import { DISPLAY, FONTS, MONO, SANS } from '../brand/identity.mjs';
+import { accessibleSource, source } from '../../src/palette.mjs';
 import { renderHtml } from './cdp.mjs';
 import { crop, decode, encode, shrink } from './png.mjs';
 import { simulateImage } from './simulate.mjs';
 
-const FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500&display=swap" rel="stylesheet">';
-
-const SWATCHES = [
-  ['Editor', 'editor'], ['Side bar', 'sidebar'], ['Panel', 'panel'], ['Selection', 'selection'],
-  ['Text', 'foreground'], ['Secondary', 'secondary'], ['Comments', 'comment'], ['Border', 'border'],
-  ['Keywords', 'keyword'], ['Functions', 'function'], ['Types', 'type'], ['Strings', 'string'],
-  ['Numbers', 'number'], ['Errors', 'error'], ['Focus', 'focus'], ['Ember', 'ember'],
+const SHEETS = [
+  {
+    file: 'palette.png',
+    palette: source,
+    title: { dark: 'Cindervale Dark', light: 'Cindervale Light' },
+    subtitle: { dark: 'Warm charcoal, walnut, copper and burgundy light.', light: 'Warm ivory paper, terracotta, soft wine and sage.' },
+    swatches: [
+      ['Editor', 'editor'], ['Side bar', 'sidebar'], ['Panel', 'panel'], ['Elevated', 'elevated'],
+      ['Text', 'foreground'], ['Secondary', 'secondary'], ['Border', 'border'], ['Selection', 'selection'],
+      ['Coral', 'coral'], ['Peach', 'peach'], ['Amber', 'amber'], ['Plum', 'plum'],
+      ['Berry', 'berry'], ['Eucalyptus', 'eucalyptus'], ['Blue', 'blue'], ['Sage', 'sage'],
+    ],
+  },
+  {
+    file: 'cindervale-accessible-palette.png',
+    palette: accessibleSource,
+    title: { dark: 'Cindervale Accessible Dark', light: 'Cindervale Accessible Light' },
+    subtitle: { dark: 'Warm charcoal with violet, sky blue, bronze, peach and teal.', light: 'Warm paper with deep violet, cobalt, ochre, rust and teal.' },
+    swatches: [
+      ['Editor', 'editor'], ['Side bar', 'sidebar'], ['Panel', 'panel'], ['Selection', 'selection'],
+      ['Text', 'foreground'], ['Secondary', 'secondary'], ['Comments', 'comment'], ['Border', 'border'],
+      ['Keywords', 'keyword'], ['Functions', 'function'], ['Types', 'type'], ['Strings', 'string'],
+      ['Numbers', 'number'], ['Errors', 'error'], ['Focus', 'focus'], ['Ember', 'ember'],
+    ],
+  },
 ];
 
-function half(title, subtitle, s) {
-  const swatches = SWATCHES.map(([label, key]) => `
+function half(sheet, mode) {
+  const s = sheet.palette[mode];
+  const swatches = sheet.swatches.map(([label, key]) => `
     <div class="swatch"><span style="background:${s[key]}"></span><div><b>${label}</b><code>${s[key]}</code></div></div>`).join('');
   return `<section style="--bg:${s.editor};--fg:${s.foreground};--muted:${s.secondary};--edge:${s.border}">
-    <h1>${title}</h1><p>${subtitle}</p><div class="grid">${swatches}</div></section>`;
+    <h1>${sheet.title[mode]}</h1><p>${sheet.subtitle[mode]}</p><div class="grid">${swatches}</div></section>`;
 }
 
+/** Both palette sheets: the standard and the accessible palette, dark beside light. */
 export async function buildPalette(repo, work) {
-  const { light, dark } = accessibleSource;
-  const html = `<!doctype html><meta charset="utf-8">${FONTS}<style>
-    * { box-sizing: border-box; margin: 0; }
-    body { display: flex; width: 1600px; height: 600px; font-family: -apple-system, "Segoe UI", system-ui, sans-serif; }
-    section { flex: 1; padding: 44px 44px 0; background: var(--bg); color: var(--fg); }
-    h1 { font: 500 38px/1.1 Newsreader, Georgia, serif; letter-spacing: -0.01em; }
-    p { margin: 12px 0 34px; color: var(--muted); font-size: 15px; }
-    .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px 18px; }
-    .swatch { display: flex; align-items: center; gap: 13px; }
-    .swatch span { width: 44px; height: 44px; border-radius: 11px; box-shadow: inset 0 0 0 1px var(--edge); flex: none; }
-    b { display: block; font-size: 14px; font-weight: 600; }
-    code { font: 13px ui-monospace, "SF Mono", Menlo, monospace; color: var(--muted); }
-  </style><body>
-    ${half('Cindervale Accessible Dark', 'Warm charcoal with violet, sky blue, bronze, peach and teal.', dark)}
-    ${half('Cindervale Accessible Light', 'Warm paper with deep violet, cobalt, ochre, rust and teal.', light)}
-  </body>`;
-  const file = path.join(work, 'palette.html');
-  await writeFile(file, html);
-  const png = await renderHtml(file, { width: 1600, height: 600, scale: 2, profile: path.join(work, 'chromium') });
-  await writeFile(path.join(repo, 'screenshots', 'cindervale-accessible-palette.png'), png);
-  console.log('✓ palette → screenshots/cindervale-accessible-palette.png');
+  for (const sheet of SHEETS) {
+    const html = `<!doctype html><meta charset="utf-8">${FONTS}<style>
+      * { box-sizing: border-box; margin: 0; }
+      body { display: flex; width: 1600px; font-family: ${SANS}; -webkit-font-smoothing: antialiased; }
+      section { flex: 1; padding: 46px 48px 52px; background: var(--bg); color: var(--fg); }
+      h1 { font: 600 44px/1.05 ${DISPLAY}; }
+      p { margin: 10px 0 34px; color: var(--muted); font-size: 16px; }
+      .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px 18px; }
+      .swatch { display: flex; align-items: center; gap: 13px; }
+      .swatch span { width: 44px; height: 44px; border-radius: 11px; box-shadow: inset 0 0 0 1px var(--edge); flex: none; }
+      b { display: block; font-size: 15px; font-weight: 700; }
+      code { font: 13px ${MONO}; color: var(--muted); }
+    </style><body>${half(sheet, 'dark')}${half(sheet, 'light')}</body>`;
+    const file = path.join(work, sheet.file.replace('.png', '.html'));
+    await mkdir(work, { recursive: true });
+    await writeFile(file, html);
+    const png = await renderHtml(file, { width: 1600, height: 400, scale: 2, profile: path.join(work, 'chromium') });
+    await writeFile(path.join(repo, 'screenshots', sheet.file), png);
+    console.log(`✓ palette → screenshots/${sheet.file}`);
+  }
 }
 
 // The same stretch of project-board.tsx in every capture (2× pixels):
@@ -63,7 +88,7 @@ export async function buildBoards(repo, work) {
   await mkdir(tiles, { recursive: true });
   for (const mode of ['light', 'dark']) {
     const sources = [
-      [`Cindervale ${mode === 'light' ? 'Light' : 'Dark'}`, path.join(work, 'captures', `cindervale-${mode}.png`)],
+      [`Cindervale ${mode === 'light' ? 'Light' : 'Dark'}`, path.join(repo, 'screenshots', `cindervale-${mode}.png`)],
       [`Cindervale Accessible ${mode === 'light' ? 'Light' : 'Dark'}`, path.join(repo, 'screenshots', `cindervale-accessible-${mode}.png`)],
     ];
     const columns = [];
@@ -81,8 +106,8 @@ export async function buildBoards(repo, work) {
     const html = `<!doctype html><meta charset="utf-8">${FONTS}<style>
       * { margin: 0; box-sizing: border-box; }
       body { width: ${200 + 2 * (TILE.width / 2) + 72}px; padding: 36px 36px 28px; background: ${dark ? '#141012' : '#EFE7E2'}; color: ${dark ? '#F4E9E2' : '#342C31'};
-             font-family: -apple-system, "Segoe UI", system-ui, sans-serif; }
-      h1 { font: 500 30px Newsreader, Georgia, serif; margin-bottom: 6px; }
+             font-family: ${SANS}; -webkit-font-smoothing: antialiased; }
+      h1 { font: 600 34px ${DISPLAY}; margin-bottom: 6px; }
       .lede { color: ${dark ? '#B4A39D' : '#73676D'}; font-size: 14px; margin-bottom: 22px; }
       table { border-spacing: 12px 10px; margin: -10px -12px; }
       th { font-size: 14px; font-weight: 600; text-align: left; }
@@ -104,4 +129,11 @@ export async function buildBoards(repo, work) {
     await writeFile(path.join(repo, 'screenshots', `color-vision-${mode}.png`), png);
     console.log(`✓ board → screenshots/color-vision-${mode}.png`);
   }
+}
+
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  const repo = fileURLToPath(new URL('../../', import.meta.url));
+  const work = path.join(repo, '.vscode-test', 'screenshots');
+  await buildPalette(repo, work);
+  await buildBoards(repo, work);
 }

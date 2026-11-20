@@ -1,0 +1,65 @@
+name: Color report
+description: A color looks wrong in your language, two colors are hard to tell apart, or something is hard to read.
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time. A short code sample and a screenshot make a color easy to find and fix.
+        **Developer: Inspect Editor Tokens and Scopes** in the Command Palette shows which rule colors a token; its output helps too.
+  - type: dropdown
+    id: variant
+    attributes:
+      label: Variant
+      options:
+        - Cindervale Dark
+        - Cindervale Light
+        - Cindervale Accessible Dark
+        - Cindervale Accessible Light
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of problem is it?
+      options:
+        - A color looks wrong or out of place
+        - Two colors are hard to tell apart
+        - Text or part of the interface is hard to read
+        - Something else
+    validations:
+      required: true
+  - type: input
+    id: where
+    attributes:
+      label: Language or part of the interface
+      placeholder: "TSX, Python, Source Control, the terminal…"
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: VS Code and Cindervale versions
+      description: "**Help: About** shows the VS Code version; the Extensions view shows Cindervale's."
+      placeholder: "VS Code 1.147.0, Cindervale 1.1.0"
+    validations:
+      required: true
+  - type: textarea
+    id: sample
+    attributes:
+      label: Code sample
+      description: A few lines that show the problem, if it is in the editor.
+      render: text
+  - type: textarea
+    id: details
+    attributes:
+      label: What you see
+      description: Paste or drag a screenshot here, and describe what is hard to read or tell apart.
+    validations:
+      required: true
+  - type: textarea
+    id: vision
+    attributes:
+      label: How you see color (optional)
+      description: |
+        Only if you are comfortable sharing it, for example "deuteranomaly" or "I find red and green hard to tell apart".
+        Feedback from people who see color differently is especially welcome.
