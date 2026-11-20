@@ -1,13 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <title>Cindervale</title>
-  <defs>
-    <clipPath id="tile"><rect width="512" height="512" rx="116"/></clipPath>
-  </defs>
-  <rect width="512" height="512" rx="116" fill="#211B1E"/>
-  <g clip-path="url(#tile)">
-    <!-- The ember: a rounded lozenge in coral -->
-    <rect x="204" y="246" width="104" height="104" rx="28" transform="rotate(45 256 298)" fill="#F08A76"/>
-    <!-- The valley: one soft plum silhouette cradling it -->
-    <path d="M-10 276 C 104 276 178 390 256 390 C 334 390 408 276 522 276 V522 H-10 Z" fill="#87506D"/>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Cindervale">
+<title>Cindervale</title>
+<defs>
+<linearGradient id="tile" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#33271F"/><stop offset="1" stop-color="#211814"/></linearGradient>
+<radialGradient id="glow" cx="0.5" cy="0.36" r="0.55"><stop offset="0" stop-color="#C97B5B" stop-opacity="0.2"/><stop offset="1" stop-color="#C97B5B" stop-opacity="0"/></radialGradient>
+<linearGradient id="icon-fill" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="617"><stop offset="0" stop-color="#F6E6D6"/><stop offset="0.35" stop-color="#EFD3BC"/><stop offset="0.7" stop-color="#D9997A"/><stop offset="1" stop-color="#C27556"/></linearGradient><linearGradient id="icon-fold" gradientUnits="userSpaceOnUse" x1="0" y1="355.5" x2="0" y2="552.7"><stop offset="0" stop-color="#E2B597"/><stop offset="1" stop-color="#D08B6B"/></linearGradient>
+</defs>
+<rect width="512" height="512" rx="112" fill="url(#tile)"/>
+<rect width="512" height="512" rx="112" fill="url(#glow)"/>
+<rect x="1.5" y="1.5" width="509" height="509" rx="110.5" fill="none" stroke="#F8F6F1" stroke-opacity="0.07" stroke-width="3"/>
+<g transform="translate(256 148.9) scale(0.3277)"><path d="M 0 0 Q 20 89.6 100 112 Q 20 134.4 0 224 Q -20 134.4 -100 112 Q -20 89.6 0 0 Z" fill="url(#icon-fill)"/><path d="M -500 617 C -402.9 494.8 -281.2 215.3 -191.9 215.3 C -126.2 215.3 -106.4 243.7 0 355.5 C 106.4 243.7 126.2 215.3 191.9 215.3 C 281.2 215.3 402.9 494.8 500 617 C 421.3 565.8 275.1 410.5 198.2 410.5 C 116.3 410.5 67.7 474.8 0 552.7 C -67.7 474.8 -116.3 410.5 -198.2 410.5 C -275.1 410.5 -421.3 565.8 -500 617 Z" fill="url(#icon-fill)"/><path d="M 0 355.5 L -93 453.1 C -62.4 478.8 -33.6 514.1 0 552.7 C 33.6 514.1 62.4 478.8 93 453.1 Z" fill="url(#icon-fold)"/><path d="M -93 453.1 L 0 355.5 L 93 453.1" fill="none" stroke="#A8654A" stroke-width="3" stroke-opacity="0.45" stroke-linejoin="round"/></g>
 </svg>

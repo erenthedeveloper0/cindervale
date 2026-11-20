@@ -1,4 +1,4 @@
-# Only the manifest, docs, icon and generated themes ship in the VSIX.
+# Only the manifest, README, changelog, license, icon and generated themes ship in the VSIX.
 .vscode/**
 .vscode-test/**
 .github/**
@@ -10,6 +10,7 @@ fixtures/**
 screenshots/**
 docs/**
 reports/**
+brand/**
 images/*.svg
 *.vsix
 .gitignore

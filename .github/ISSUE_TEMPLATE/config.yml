@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Customization recipes
+    url: https://github.com/erenthedeveloper0/cindervale/blob/main/docs/customization.md
+    about: Turning italics or bold constants off, and changing a color for one variant.
+  - name: Accessibility notes
+    url: https://github.com/erenthedeveloper0/cindervale/blob/main/docs/accessibility.md
+    about: What was measured, how, and what still needs testing with people.
