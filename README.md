@@ -254,7 +254,7 @@ test/         tests, contrast and color-vision pairs, token expectations, VS Cod
 scripts/      build, audits, token inspector, package check, screenshots, brand assets
 fixtures/     sample files in every supported language, for visual and token checks
 screenshots/  captures from VS Code, palette sheets and color-vision boards
-docs/         accessibility notes, customization recipes, release checklist
+docs/         accessibility notes and customization recipes
 brand/        the identity: logo, banners, social preview and its guidelines
 images/       the Marketplace icon
 ```
@@ -266,8 +266,7 @@ Only `package.json`, `README.md`, `CHANGELOG.md`, `LICENSE`, `images/icon.png` a
 
 - **Using Cindervale:** [Customization](docs/customization.md) · [Accessibility](docs/accessibility.md) ·
   [Changelog](CHANGELOG.md)
-- **Working on it:** [Contributing](CONTRIBUTING.md) · [Release checklist](docs/release-checklist.md) ·
-  [Brand](brand/README.md)
+- **Working on it:** [Contributing](CONTRIBUTING.md) · [Brand](brand/README.md)
 
 <img alt="" src="brand/graphics/cindervale-divider.png" width="100%">
 
@@ -276,7 +275,7 @@ Only `package.json`, `README.md`, `CHANGELOG.md`, `LICENSE`, `images/icon.png` a
 Found a color that feels off in your language, or two colors you cannot tell apart?
 [Report it](https://github.com/erenthedeveloper0/cindervale/issues/new/choose) with a short code
 sample, a screenshot and the variant you use. [CONTRIBUTING.md](CONTRIBUTING.md) explains how the
-palette is organized, how to preview a change and how releases are made. Three rules worth knowing
+palette is organized and how to preview a change. Three rules worth knowing
 up front:
 
 1. **The theme files are generated.** Change `src/`, run `npm run build`, and never edit

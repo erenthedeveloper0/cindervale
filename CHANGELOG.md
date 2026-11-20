@@ -4,15 +4,16 @@ All notable changes to Cindervale are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [1.1.1] — 2026-11-20
 
-The theme files are unchanged.
+No theme colors changed.
 
 ### Changed
 
 - A new icon: the Cindervale mark from the brand identity (two ridges, the vale between them and a
-  spark above) on a walnut tile, replacing the coral lozenge. It appears on the Marketplace and in
-  VS Code from the next release.
+  spark above) on a walnut tile, replacing the coral lozenge, on the Marketplace and in VS Code's
+  Extensions view.
+- The Marketplace description names the four variants.
 - The README is reorganized around the four variants, with a gallery, what each check covers, the
   repository layout and links to every document.
 - The README's recipe for turning italics off now covers every italic rule. The previous one left

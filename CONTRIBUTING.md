@@ -29,7 +29,7 @@ npm test, npm run contrast, npm run vision and npm run tokens check the generate
 | `test/` | Freshness, schema, manifest, color-ID, contrast, color-vision and documentation tests; token expectations |
 | `scripts/` | Build, audits, token inspector, package check, screenshot tooling, brand assets |
 | `fixtures/` | Sample files for visual testing in every supported language |
-| `docs/` | Accessibility notes, customization recipes and the release checklist |
+| `docs/` | Accessibility notes and customization recipes |
 | `brand/` | The identity: logo, banners, social preview and [its guidelines](brand/README.md) |
 
 In the standard light theme, accents used as text are darkened in OKLCH ("ink" tones) until they
@@ -94,20 +94,10 @@ npm run brand -- --svg   # the SVG logos and icon only
 ```
 
 `images/icon.png` ships in the VSIX, so a change to the mark changes the Marketplace listing at the
-next release. GitHub does not read the social preview from the repository: upload
-`brand/social/cindervale-social-preview.jpg` in the repository settings after rebuilding it.
+next release.
 
 ## Pull requests
 
 The pull request template lists the checks for a color change. Include before-and-after screenshots
 for anything visible, and the "closest syntax pair" lines from `npm run vision` for changes to the
 accessible variants.
-
-## Releasing
-
-Follow [docs/release-checklist.md](docs/release-checklist.md). In short:
-
-1. Update `CHANGELOG.md` and bump `version` in `package.json`.
-2. Run `npm run package`. Packaging runs the freshness check and tests first.
-3. Upload the `.vsix` on the [Marketplace publisher page](https://marketplace.visualstudio.com/manage),
-   or run `npx vsce publish --azure-credential`.

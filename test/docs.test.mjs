@@ -11,7 +11,7 @@ import { variants } from '../src/theme.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const read = (file) => readFileSync(path.join(root, file), 'utf8');
-const DOCS = ['README.md', 'CHANGELOG.md', 'CONTRIBUTING.md', 'docs/accessibility.md', 'docs/customization.md', 'docs/release-checklist.md', 'brand/README.md'];
+const DOCS = ['README.md', 'CHANGELOG.md', 'CONTRIBUTING.md', 'docs/accessibility.md', 'docs/customization.md', 'brand/README.md'];
 // Absolute links into this repository's default branch must name a file that exists here.
 const OWN = /^https:\/\/(?:raw\.githubusercontent\.com\/erenthedeveloper0\/cindervale\/main|github\.com\/erenthedeveloper0\/cindervale\/(?:blob|tree)\/main)\/(.+)$/;
 

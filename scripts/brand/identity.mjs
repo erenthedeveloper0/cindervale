@@ -2,7 +2,7 @@
 // brand/README.md explains each decision; scripts/brand/build.mjs turns this
 // file into every logo, icon, banner and social image in the repository.
 
-/** Brand colors, from the brand board (brand/source/cindervale-brand-board.png). */
+/** Brand colors; brand/README.md gives each one's role. */
 export const colors = {
   walnut: '#2B1F1A', // dark grounds, the mono mark on light
   charcoal: '#3B3129', // raised dark surfaces, rules on dark
@@ -17,7 +17,7 @@ export const colors = {
   berry: '#9B4F7A',
 };
 
-/** Typefaces from the brand board, loaded by every rendered asset. */
+/** The brand typefaces, loaded by every rendered asset. */
 export const FONTS = [
   '<link rel="preconnect" href="https://fonts.googleapis.com">',
   '<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Cormorant+SC:wght@500;600&family=JetBrains+Mono:wght@400;500&display=block" rel="stylesheet">',
@@ -31,8 +31,7 @@ export const MONO = '"JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace
 /*
  * The mark: two ridges with a vale between them, and a spark above.
  *
- * Fitted to the brand board's primary symbol (cubic Béziers, RMS error under
- * 1.5 units). Units: the wing tips sit at x = ±500, the spark's top at y = 0,
+ * Units: the wing tips sit at x = ±500, the spark's top at y = 0,
  * the tips at y = 617. Each wing is a ribbon of nearly constant depth that
  * tapers to a point; the wings cross at the center, and where they overlap
  * the full-color versions show the fold.
@@ -125,7 +124,7 @@ export function markSvg(finish, { title = 'Cindervale' } = {}) {
 }
 
 /**
- * The app icon: the mark on a walnut tile, as on the brand board. 512 units
+ * The app icon: the mark on a walnut tile. 512 units
  * square; the Marketplace and VS Code show it from 42 to 128 px.
  */
 export function iconSvg() {

@@ -98,8 +98,8 @@ and every extra hue would make the remaining ones harder to separate.
 
 ## Where the palette moved from the starting values
 
-The design started from a specified palette. Measuring it showed collisions, so several values
-moved. Each change was the smallest that met the targets below.
+The first draft of the palette did not survive measurement: several roles collided, so their
+values moved. Each change was the smallest that met the targets below.
 
 | Role | Started as | Final | Why |
 | --- | --- | --- | --- |
@@ -305,7 +305,7 @@ Markdown (`README.md`, `NOTES.md`), shell, PHP, Vue, Svelte, dotenv, a unified d
 | Test | Method | Expected | Actual | Status | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Generated themes match source | `npm run check` | All four JSON files identical to `src/` output | 4 of 4 up to date | Pass | |
-| Theme schema, manifest and registration | `npm test` | Every test passes | 64 of 64 | Pass | Includes unique names, the original registrations, all 16 ANSI colors, valid hex and font styles, no scope in two rules, and no bold through semantic probes. 54 tests at 1.1.0; the documentation checks were added later |
+| Theme schema, manifest and registration | `npm test` | Every test passes | 63 of 63 | Pass | Includes unique names, the original registrations, all 16 ANSI colors, valid hex and font styles, no scope in two rules, and no bold through semantic probes. 54 tests at 1.1.0; the documentation checks were added later |
 | Workbench color IDs | `npm test` and `npm run colors:sync -- --check` | Every key registered by VS Code | 0 unknown keys in 4 themes (VS Code 1.143.1, 994 IDs) | Pass | |
 | Contrast | `npm run contrast` | Every pair with a target meets it | 890 pairs measured; 0 failures | Pass | See [Contrast audit](#contrast-audit) |
 | Color-vision separation | `npm run vision` | Every pair meets its targets in both accessible themes | 59 of 59 in each | Pass | Simulation, not people |
